@@ -1,0 +1,83 @@
+name: Question
+description: Ask a question or seek help
+title: "[Question]: "
+labels: ["question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Have a question? We're here to help! Please provide as much detail as possible.
+
+  - type: textarea
+    id: question
+    attributes:
+      label: Question
+      description: What would you like to know?
+      placeholder: Your question here...
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: Provide context about what you're trying to achieve
+      placeholder: |
+        I'm trying to...
+        My use case is...
+    validations:
+      required: true
+
+  - type: textarea
+    id: config
+    attributes:
+      label: Current Configuration
+      description: Your current connector/SMT configuration (remove sensitive information)
+      placeholder: |
+        {
+          "name": "example-connector",
+          "config": {
+            ...
+          }
+        }
+      render: yaml
+
+  - type: textarea
+    id: attempts
+    attributes:
+      label: What Have You Tried?
+      description: What have you already tried or researched?
+      placeholder: |
+        - I've read the README...
+        - I've tried...
+        - I've searched for...
+
+  - type: dropdown
+    id: version
+    attributes:
+      label: Version
+      description: Which version are you using?
+      options:
+        - "2.0.1"
+        - "2.0.0"
+        - "Other (please specify)"
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Information
+      description: Any other relevant information
+      placeholder: Environment, database type, etc.
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Checklist
+      options:
+        - label: I have searched existing issues and documentation
+          required: true
+        - label: I have provided sufficient context
+          required: true
+
