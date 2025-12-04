@@ -587,28 +587,15 @@ mvn test
 
 ## Changelog
 
-### Version 2.0.1
+See [CHANGELOG.md](CHANGELOG.md) for detailed version history and changes.
 
-**ExtractAuditRecordState Improvements:**
-- ✅ **Operation Type Detection**: Now uses `op` field from Debezium envelope for accurate operation type identification
-- ✅ **Empty Field Consistency**: Empty JSON fields (NewValues, OriginalValues, FieldIncludes) now return `"{}"` instead of `""`
-- ✅ **Field Existence Check**: Safely checks if fields exist in schema before accessing to prevent `DataException`
-- ✅ **Null Safety**: Enhanced null handling for key, source, before, and after fields
-- ✅ **Error Handling**: Improved error messages with context (topic, partition)
-- ✅ **Performance**: Schema and ObjectMapper caching for better performance
-- ✅ **Thread Safety**: Uses thread-safe `DateTimeFormatter` instead of `SimpleDateFormat`
+### Latest Release: Version 2.0.1
 
-**Documentation & Examples:**
-- ✅ **Multi-Database Support**: Updated documentation to clarify support for all Debezium connectors (SQL Server, MySQL, PostgreSQL, Oracle, MongoDB, etc.)
-- ✅ **Complete Examples**: Added comprehensive connector examples for both SMTs:
-  - `extractaudit-clickhouse-sink-example.json` - ExtractAuditRecordState usage
-  - `insertfield-clickhouse-metadata-example.json` - InsertField with Kafka metadata
-  - `insertfield-clickhouse-static-example.json` - InsertField with static values
-  - `insertfield-clickhouse-combined-example.json` - InsertField combined usage
-  - `debezium-sqlserver-source-example.json` - Debezium source connector example
-- ✅ **End-to-End Flow**: Added complete architecture diagram and data flow documentation
-- ✅ **Best Practices**: Added troubleshooting guide and best practices section
-- ✅ **Sample Data**: Added sanitized CDC sample files (INSERT, UPDATE, DELETE operations)
+**Highlights:**
+- ✅ Initial public release with ExtractAuditRecordState and InsertField SMTs
+- ✅ Multi-database support (SQL Server, MySQL, PostgreSQL, Oracle, MongoDB, and all Debezium connectors)
+- ✅ Production-ready with comprehensive error handling and performance optimizations
+- ✅ Complete documentation, examples, and CI/CD workflow
 
 ## License
 
