@@ -1,24 +1,25 @@
-# Kafka Connect Single Message Transformations (SMT)
+# Kafka Connect Audit Transforms
 
 [![Version](https://img.shields.io/badge/version-2.0.1-blue.svg)](https://github.com/tuyndoan/kafka-connect-audit-transforms)
 [![License](https://img.shields.io/badge/license-Apache%202.0-green.svg)](LICENSE)
 [![Java](https://img.shields.io/badge/java-8%2B-orange.svg)](https://www.oracle.com/java/)
 
-Custom Kafka Connect Single Message Transformations (SMT) for processing CDC (Change Data Capture) data from various databases (via Debezium) and transforming them into standardized audit records for data warehouse storage.
+**Transform Debezium CDC data into standardized audit records** for compliance, audit logging, and data warehouse storage. A production-ready Kafka Connect Single Message Transformation (SMT) plugin that works seamlessly with all Debezium connectors.
 
 ## 🚀 Features
 
-- ✅ **InsertField**: Insert Kafka metadata (topic, partition, offset, timestamp) or static values into records
-- ✅ **ExtractAuditRecordState**: Transform Debezium CDC records into standardized audit format
-- ✅ **Multi-Database Support**: Works with SQL Server, MySQL, PostgreSQL, Oracle, MongoDB, and more
+- ✅ **ExtractAuditRecordState**: Transform Debezium CDC records into standardized audit format for compliance and audit logging
+- ✅ **Multi-Database Support**: Works with SQL Server, MySQL, PostgreSQL, Oracle, MongoDB, and all Debezium-supported databases
 - ✅ **Production Ready**: Comprehensive error handling, logging, and performance optimizations
+- ✅ **InsertField**: Additional SMT for inserting Kafka metadata (topic, partition, offset, timestamp) or static values into records
 
 ## Overview
 
-This project provides two powerful SMTs for Kafka Connect:
+This project provides **ExtractAuditRecordState**, a specialized Single Message Transformation for Kafka Connect that transforms Change Data Capture (CDC) records from Debezium connectors into standardized audit record format. Perfect for organizations requiring comprehensive audit logging, compliance tracking, and data warehouse ETL pipelines.
 
-1. **InsertField**: Inserts Kafka metadata fields (topic, partition, offset, timestamp) or static values into records
-2. **ExtractAuditRecordState**: Transforms Debezium CDC records into standardized audit record format for audit logging and compliance
+**Primary Use Case**: Transform CDC data from any database (via Debezium) into standardized audit records stored in data warehouses like ClickHouse for compliance and analytics.
+
+**Additional Feature**: Includes `InsertField` SMT for inserting Kafka metadata and static values into records.
 
 ## Architecture & Data Flow
 
@@ -200,76 +201,9 @@ curl -X POST http://localhost:8083/connectors \
 
 ## 📦 Components
 
-### 1. InsertField
+### 1. ExtractAuditRecordState (Primary - Audit Transformation)
 
-A transformation that inserts field(s) using attributes from the record metadata or a configured static value with datatype support.
-
-#### ✨ Features
-- Insert Kafka topic name
-- Insert Kafka partition number
-- Insert Kafka offset (for sink connectors)
-- Insert record timestamp
-- Insert static field with type conversion support
-
-#### 📋 Supported Types
-- `byte` / `int8`
-- `short` / `int16`
-- `int` / `int32`
-- `long` / `int64`
-- `float` / `float32`
-- `double` / `float64`
-- `boolean`
-- `string` (default)
-
-**Usage:**
-
-```json
-{
-  "transforms": "InsertField",
-  "transforms.InsertField.type": "com.tuyndv.kafka.smt.InsertField$Value",
-  "transforms.InsertField.topic.field": "kafka_topic",
-  "transforms.InsertField.partition.field": "kafka_partition"
-}
-```
-
-#### ⚙️ Configuration Options
-
-| Property | Type | Default | Description |
-|----------|------|---------|-------------|
-| `topic.field` | String | `null` | Field name for Kafka topic. Suffix with `!` for required, `?` for optional (default) |
-| `partition.field` | String | `null` | Field name for Kafka partition. Suffix with `!` for required, `?` for optional |
-| `offset.field` | String | `null` | Field name for Kafka offset (sink connectors only). Suffix with `!` for required, `?` for optional |
-| `timestamp.field` | String | `null` | Field name for record timestamp. Suffix with `!` for required, `?` for optional |
-| `static.field` | String | `null` | Field name for static data field. Suffix with `!` for required, `?` for optional |
-| `static.type` | String | `null` | Data type for static field (`int8`, `int16`, `int32`, `int64`, `float32`, `float64`, `boolean`, `string`) |
-| `static.value` | String | `null` | Static field value |
-
-#### 📚 Examples
-
-**Insert topic and partition:**
-```json
-{
-  "transforms": "InsertField",
-  "transforms.InsertField.type": "com.tuyndv.kafka.smt.InsertField$Value",
-  "transforms.InsertField.topic.field": "kafka_topic",
-  "transforms.InsertField.partition.field": "kafka_partition"
-}
-```
-
-**Insert static field with type:**
-```json
-{
-  "transforms": "InsertField",
-  "transforms.InsertField.type": "com.tuyndv.kafka.smt.InsertField$Value",
-  "transforms.InsertField.static.field": "SourceSystem",
-  "transforms.InsertField.static.type": "string",
-  "transforms.InsertField.static.value": "SQL_SERVER"
-}
-```
-
-### 2. ExtractAuditRecordState
-
-A transformation specifically designed for processing CDC (Change Data Capture) data from Debezium connectors (supports SQL Server, MySQL, PostgreSQL, Oracle, MongoDB, and other Debezium-supported databases). It extracts audit information from CDC records and transforms them into a standardized audit record format.
+**The core transformation for audit logging and compliance.** Specifically designed for processing CDC (Change Data Capture) data from Debezium connectors (supports SQL Server, MySQL, PostgreSQL, Oracle, MongoDB, and other Debezium-supported databases). It extracts audit information from CDC records and transforms them into a standardized audit record format suitable for data warehouse storage and compliance tracking.
 
 #### ✨ Features
 - **Operation Type Detection**: Uses `op` field from Debezium envelope to accurately identify operation type (INSERT, UPDATE, DELETE)
@@ -349,6 +283,73 @@ A transformation specifically designed for processing CDC (Change Data Capture) 
   "transforms": "ExtractAudit",
   "transforms.ExtractAudit.type": "com.tuyndv.kafka.smt.ExtractAuditRecordState$Value",
   "transforms.ExtractAudit.include": "Code, AutoCode, MethodId, BranchId, BillTypeId, CenterId"
+}
+```
+
+### 2. InsertField (Additional Utility)
+
+A utility transformation that inserts field(s) using attributes from the record metadata or a configured static value with datatype support. Useful for adding Kafka metadata or static values to records.
+
+#### ✨ Features
+- Insert Kafka topic name
+- Insert Kafka partition number
+- Insert Kafka offset (for sink connectors)
+- Insert record timestamp
+- Insert static field with type conversion support
+
+#### 📋 Supported Types
+- `byte` / `int8`
+- `short` / `int16`
+- `int` / `int32`
+- `long` / `int64`
+- `float` / `float32`
+- `double` / `float64`
+- `boolean`
+- `string` (default)
+
+**Usage:**
+
+```json
+{
+  "transforms": "InsertField",
+  "transforms.InsertField.type": "com.tuyndv.kafka.smt.InsertField$Value",
+  "transforms.InsertField.topic.field": "kafka_topic",
+  "transforms.InsertField.partition.field": "kafka_partition"
+}
+```
+
+#### ⚙️ Configuration Options
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `topic.field` | String | `null` | Field name for Kafka topic. Suffix with `!` for required, `?` for optional (default) |
+| `partition.field` | String | `null` | Field name for Kafka partition. Suffix with `!` for required, `?` for optional |
+| `offset.field` | String | `null` | Field name for Kafka offset (sink connectors only). Suffix with `!` for required, `?` for optional |
+| `timestamp.field` | String | `null` | Field name for record timestamp. Suffix with `!` for required, `?` for optional |
+| `static.field` | String | `null` | Field name for static data field. Suffix with `!` for required, `?` for optional |
+| `static.type` | String | `null` | Data type for static field (`int8`, `int16`, `int32`, `int64`, `float32`, `float64`, `boolean`, `string`) |
+| `static.value` | String | `null` | Static field value |
+
+#### 📚 Examples
+
+**Insert topic and partition:**
+```json
+{
+  "transforms": "InsertField",
+  "transforms.InsertField.type": "com.tuyndv.kafka.smt.InsertField$Value",
+  "transforms.InsertField.topic.field": "kafka_topic",
+  "transforms.InsertField.partition.field": "kafka_partition"
+}
+```
+
+**Insert static field with type:**
+```json
+{
+  "transforms": "InsertField",
+  "transforms.InsertField.type": "com.tuyndv.kafka.smt.InsertField$Value",
+  "transforms.InsertField.static.field": "SourceSystem",
+  "transforms.InsertField.static.type": "string",
+  "transforms.InsertField.static.value": "SQL_SERVER"
 }
 ```
 
