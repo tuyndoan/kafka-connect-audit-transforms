@@ -1,0 +1,25 @@
+{
+  "name": "insertfield-clickhouse-static-example",
+  "config": {
+    "tasks.max": "1",
+    "connector.class": "com.clickhouse.kafka.connect.ClickHouseSinkConnector",
+    "topics": "example_topic",
+    "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "key.converter.schemas.enable": "true",
+    "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "value.converter.schemas.enable": "true",
+    "transforms": "insertStatic",
+    "transforms.insertStatic.type": "com.tuyndv.kafka.smt.InsertField$Value",
+    "transforms.insertStatic.static.field": "SourceSystem",
+    "transforms.insertStatic.static.type": "string",
+    "transforms.insertStatic.static.value": "SQL_SERVER",
+    "hostname": "your-clickhouse-host",
+    "port": "8123",
+    "database": "your_database",
+    "username": "your_username",
+    "password": "**************************",
+    "ssl": "false",
+    "exactlyOnce": "false"
+  }
+}
+

@@ -1,0 +1,29 @@
+{
+  "name": "insertfield-clickhouse-combined-example",
+  "config": {
+    "tasks.max": "1",
+    "connector.class": "com.clickhouse.kafka.connect.ClickHouseSinkConnector",
+    "topics": "example_topic",
+    "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "key.converter.schemas.enable": "true",
+    "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "value.converter.schemas.enable": "true",
+    "transforms": "insertFields",
+    "transforms.insertFields.type": "com.tuyndv.kafka.smt.InsertField$Value",
+    "transforms.insertFields.topic.field": "kafka_topic",
+    "transforms.insertFields.partition.field": "kafka_partition",
+    "transforms.insertFields.offset.field": "kafka_offset",
+    "transforms.insertFields.timestamp.field": "kafka_timestamp",
+    "transforms.insertFields.static.field": "MessageTypeId",
+    "transforms.insertFields.static.type": "int32",
+    "transforms.insertFields.static.value": "1",
+    "hostname": "your-clickhouse-host",
+    "port": "8123",
+    "database": "your_database",
+    "username": "your_username",
+    "password": "**************************",
+    "ssl": "false",
+    "exactlyOnce": "false"
+  }
+}
+

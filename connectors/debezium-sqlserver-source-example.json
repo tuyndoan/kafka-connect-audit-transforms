@@ -1,0 +1,30 @@
+{
+  "name": "debezium-sqlserver-source-example",
+  "config": {
+    "connector.class": "io.debezium.connector.sqlserver.SqlServerConnector",
+    "tasks.max": "1",
+    "transforms": "topic_to_table",
+    "transforms.topic_to_table.type": "org.apache.kafka.connect.transforms.RegexRouter",
+    "transforms.topic_to_table.regex": "example_data_catalog.EXAMPLE_DB.dbo.(.*)",
+    "transforms.topic_to_table.replacement": "example_data_catalog_$1",
+    "topic.prefix": "example_data_catalog",
+    "database.names": "EXAMPLE_DB",
+    "database.hostname": "your-sqlserver-host",
+    "database.port": "1433",
+    "database.user": "your_username",
+    "database.password": "**************************",
+    "time.precision.mode": "connect",
+    "snapshot.isolation.mode": "snapshot",
+    "table.include.list": "dbo.ExampleTable1, dbo.ExampleTable2, dbo.ExampleTable3",
+    "topic.creation.default.partitions": "1",
+    "topic.creation.default.retention.bytes": "1073741824",
+    "schema.history.internal.kafka.topic": "example_data_catalog.schemahistory",
+    "topic.creation.default.replication.factor": "1",
+    "database.encrypt": "true",
+    "database.server.name": "example_data_catalog",
+    "schema.history.internal.kafka.bootstrap.servers": "your-kafka-broker:9092",
+    "topic.creation.default.retention.ms": "3600000",
+    "topic.creation.enable": "true",
+    "database.trustServerCertificate": "true"
+  }
+}

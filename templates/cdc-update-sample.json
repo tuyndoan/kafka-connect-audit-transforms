@@ -1,0 +1,357 @@
+[
+  {
+    "partition": 0,
+    "offset": 44,
+    "timestamp": 1764772957510,
+    "timestampType": "CREATE_TIME",
+    "key": {
+      "schema": {
+        "type": "struct",
+        "fields": [{ "type": "int32", "optional": false, "field": "Id" }],
+        "optional": false,
+        "name": "example_data_catalog.EXAMPLE_DB.dbo.ExampleTable.Key"
+      },
+      "payload": { "Id": 14 }
+    },
+    "value": {
+      "schema": {
+        "type": "struct",
+        "fields": [
+          {
+            "type": "struct",
+            "fields": [
+              { "type": "int32", "optional": false, "field": "Id" },
+              { "type": "int32", "optional": true, "field": "CenterId" },
+              { "type": "int32", "optional": true, "field": "GeneralId" },
+              { "type": "int32", "optional": true, "field": "SoOrderId" },
+              { "type": "int32", "optional": false, "field": "DiscountId" },
+              {
+                "type": "int64",
+                "optional": true,
+                "name": "org.apache.kafka.connect.data.Timestamp",
+                "version": 1,
+                "field": "UsingDate"
+              },
+              {
+                "type": "bytes",
+                "optional": true,
+                "name": "org.apache.kafka.connect.data.Decimal",
+                "version": 1,
+                "parameters": {
+                  "scale": "4",
+                  "connect.decimal.precision": "19"
+                },
+                "field": "DiscountAmount"
+              },
+              {
+                "type": "bytes",
+                "optional": true,
+                "name": "org.apache.kafka.connect.data.Decimal",
+                "version": 1,
+                "parameters": {
+                  "scale": "4",
+                  "connect.decimal.precision": "19"
+                },
+                "field": "OrderDiscountAmount"
+              },
+              {
+                "type": "string",
+                "optional": true,
+                "field": "GiftDescription"
+              },
+              { "type": "int32", "optional": true, "field": "ProductId" },
+              { "type": "int32", "optional": true, "field": "Quantity" },
+              {
+                "type": "boolean",
+                "optional": true,
+                "field": "isDiscountAmount"
+              },
+              {
+                "type": "boolean",
+                "optional": true,
+                "field": "isDiscountPercent"
+              },
+              {
+                "type": "boolean",
+                "optional": true,
+                "field": "isDiscountProduct"
+              },
+              {
+                "type": "bytes",
+                "optional": true,
+                "name": "org.apache.kafka.connect.data.Decimal",
+                "version": 1,
+                "parameters": {
+                  "scale": "4",
+                  "connect.decimal.precision": "19"
+                },
+                "field": "DiscountPercent"
+              },
+              { "type": "string", "optional": true, "field": "CustomerPhone" },
+              {
+                "type": "int32",
+                "optional": true,
+                "field": "PaymentContactId"
+              },
+              { "type": "string", "optional": true, "field": "PanCard" },
+              { "type": "boolean", "optional": true, "field": "Inactive" },
+              { "type": "boolean", "optional": true, "field": "IsRequestInfo" },
+              { "type": "string", "optional": true, "field": "DiscountGuidId" },
+              {
+                "type": "int32",
+                "optional": true,
+                "field": "StoreBillDetailId"
+              },
+              { "type": "int32", "optional": true, "field": "RefDetailId" },
+              { "type": "int32", "optional": true, "field": "OrderDetailId" },
+              {
+                "type": "boolean",
+                "optional": true,
+                "field": "ReturnDiscount"
+              },
+              { "type": "boolean", "optional": true, "field": "SStudent" },
+              { "type": "int32", "optional": true, "field": "EduType" }
+            ],
+            "optional": true,
+            "name": "example_data_catalog.EXAMPLE_DB.dbo.ExampleTable.Value",
+            "field": "before"
+          },
+          {
+            "type": "struct",
+            "fields": [
+              { "type": "int32", "optional": false, "field": "Id" },
+              { "type": "int32", "optional": true, "field": "CenterId" },
+              { "type": "int32", "optional": true, "field": "GeneralId" },
+              { "type": "int32", "optional": true, "field": "SoOrderId" },
+              { "type": "int32", "optional": false, "field": "DiscountId" },
+              {
+                "type": "int64",
+                "optional": true,
+                "name": "org.apache.kafka.connect.data.Timestamp",
+                "version": 1,
+                "field": "UsingDate"
+              },
+              {
+                "type": "bytes",
+                "optional": true,
+                "name": "org.apache.kafka.connect.data.Decimal",
+                "version": 1,
+                "parameters": {
+                  "scale": "4",
+                  "connect.decimal.precision": "19"
+                },
+                "field": "DiscountAmount"
+              },
+              {
+                "type": "bytes",
+                "optional": true,
+                "name": "org.apache.kafka.connect.data.Decimal",
+                "version": 1,
+                "parameters": {
+                  "scale": "4",
+                  "connect.decimal.precision": "19"
+                },
+                "field": "OrderDiscountAmount"
+              },
+              {
+                "type": "string",
+                "optional": true,
+                "field": "GiftDescription"
+              },
+              { "type": "int32", "optional": true, "field": "ProductId" },
+              { "type": "int32", "optional": true, "field": "Quantity" },
+              {
+                "type": "boolean",
+                "optional": true,
+                "field": "isDiscountAmount"
+              },
+              {
+                "type": "boolean",
+                "optional": true,
+                "field": "isDiscountPercent"
+              },
+              {
+                "type": "boolean",
+                "optional": true,
+                "field": "isDiscountProduct"
+              },
+              {
+                "type": "bytes",
+                "optional": true,
+                "name": "org.apache.kafka.connect.data.Decimal",
+                "version": 1,
+                "parameters": {
+                  "scale": "4",
+                  "connect.decimal.precision": "19"
+                },
+                "field": "DiscountPercent"
+              },
+              { "type": "string", "optional": true, "field": "CustomerPhone" },
+              {
+                "type": "int32",
+                "optional": true,
+                "field": "PaymentContactId"
+              },
+              { "type": "string", "optional": true, "field": "PanCard" },
+              { "type": "boolean", "optional": true, "field": "Inactive" },
+              { "type": "boolean", "optional": true, "field": "IsRequestInfo" },
+              { "type": "string", "optional": true, "field": "DiscountGuidId" },
+              {
+                "type": "int32",
+                "optional": true,
+                "field": "StoreBillDetailId"
+              },
+              { "type": "int32", "optional": true, "field": "RefDetailId" },
+              { "type": "int32", "optional": true, "field": "OrderDetailId" },
+              {
+                "type": "boolean",
+                "optional": true,
+                "field": "ReturnDiscount"
+              },
+              { "type": "boolean", "optional": true, "field": "SStudent" },
+              { "type": "int32", "optional": true, "field": "EduType" }
+            ],
+            "optional": true,
+            "name": "example_data_catalog.EXAMPLE_DB.dbo.ExampleTable.Value",
+            "field": "after"
+          },
+          {
+            "type": "struct",
+            "fields": [
+              { "type": "string", "optional": false, "field": "version" },
+              { "type": "string", "optional": false, "field": "connector" },
+              { "type": "string", "optional": false, "field": "name" },
+              { "type": "int64", "optional": false, "field": "ts_ms" },
+              {
+                "type": "string",
+                "optional": true,
+                "name": "io.debezium.data.Enum",
+                "version": 1,
+                "parameters": { "allowed": "true,last,false,incremental" },
+                "default": "false",
+                "field": "snapshot"
+              },
+              { "type": "string", "optional": false, "field": "db" },
+              { "type": "string", "optional": true, "field": "sequence" },
+              { "type": "int64", "optional": true, "field": "ts_us" },
+              { "type": "int64", "optional": true, "field": "ts_ns" },
+              { "type": "string", "optional": false, "field": "schema" },
+              { "type": "string", "optional": false, "field": "table" },
+              { "type": "string", "optional": true, "field": "change_lsn" },
+              { "type": "string", "optional": true, "field": "commit_lsn" },
+              { "type": "int64", "optional": true, "field": "event_serial_no" }
+            ],
+            "optional": false,
+            "name": "io.debezium.connector.sqlserver.Source",
+            "field": "source"
+          },
+          {
+            "type": "struct",
+            "fields": [
+              { "type": "string", "optional": false, "field": "id" },
+              { "type": "int64", "optional": false, "field": "total_order" },
+              {
+                "type": "int64",
+                "optional": false,
+                "field": "data_collection_order"
+              }
+            ],
+            "optional": true,
+            "name": "event.block",
+            "version": 1,
+            "field": "transaction"
+          },
+          { "type": "string", "optional": false, "field": "op" },
+          { "type": "int64", "optional": true, "field": "ts_ms" },
+          { "type": "int64", "optional": true, "field": "ts_us" },
+          { "type": "int64", "optional": true, "field": "ts_ns" }
+        ],
+        "optional": false,
+        "name": "example_data_catalog.EXAMPLE_DB.dbo.ExampleTable.Envelope",
+        "version": 2
+      },
+      "payload": {
+        "before": {
+          "Id": 14,
+          "CenterId": 12869,
+          "GeneralId": null,
+          "SoOrderId": 1448586,
+          "DiscountId": 2590,
+          "UsingDate": 1705949520000,
+          "DiscountAmount": null,
+          "OrderDiscountAmount": "ALLQXgA=",
+          "GiftDescription": null,
+          "ProductId": 91686,
+          "Quantity": 1,
+          "isDiscountAmount": true,
+          "isDiscountPercent": false,
+          "isDiscountProduct": true,
+          "DiscountPercent": null,
+          "CustomerPhone": "0947330304",
+          "PaymentContactId": null,
+          "PanCard": null,
+          "Inactive": true,
+          "IsRequestInfo": false,
+          "DiscountGuidId": "00000000-0000-0000-0000-000000000000",
+          "StoreBillDetailId": null,
+          "RefDetailId": null,
+          "OrderDetailId": 2195168,
+          "ReturnDiscount": null,
+          "SStudent": null,
+          "EduType": null
+        },
+        "after": {
+          "Id": 14,
+          "CenterId": 12869,
+          "GeneralId": null,
+          "SoOrderId": 1448586,
+          "DiscountId": 2590,
+          "UsingDate": 1705949520000,
+          "DiscountAmount": null,
+          "OrderDiscountAmount": "ALLQXgA=",
+          "GiftDescription": "Discount 300000.0000",
+          "ProductId": 91686,
+          "Quantity": 1,
+          "isDiscountAmount": true,
+          "isDiscountPercent": false,
+          "isDiscountProduct": true,
+          "DiscountPercent": null,
+          "CustomerPhone": "0947330304",
+          "PaymentContactId": null,
+          "PanCard": "1",
+          "Inactive": true,
+          "IsRequestInfo": false,
+          "DiscountGuidId": "00000000-0000-0000-0000-000000000000",
+          "StoreBillDetailId": null,
+          "RefDetailId": null,
+          "OrderDetailId": 2195168,
+          "ReturnDiscount": null,
+          "SStudent": null,
+          "EduType": null
+        },
+        "source": {
+          "version": "3.0.0.Final",
+          "connector": "sqlserver",
+          "name": "example_data_catalog",
+          "ts_ms": 1764772839387,
+          "snapshot": "false",
+          "db": "EXAMPLE_DB",
+          "sequence": null,
+          "ts_us": 1764772839387000,
+          "ts_ns": "1764772839387000000",
+          "schema": "dbo",
+          "table": "ExampleTable",
+          "change_lsn": "00012a4a:0001c0b2:0008",
+          "commit_lsn": "00012a4a:0001c0b2:000f",
+          "event_serial_no": 2
+        },
+        "transaction": null,
+        "op": "u",
+        "ts_ms": 1764772957483,
+        "ts_us": 1764772957483339,
+        "ts_ns": "1764772957483339836"
+      }
+    },
+    "headers": []
+  }
+]

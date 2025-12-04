@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Main-Class: 
+Class-Path: connect-api-3.0.0.jar kafka-clients-3.0.0.jar zstd-jni-1.5.0-2.jar lz4-java-1.7.1.jar snappy-java-1.1.8.1.jar slf4j-api-1.7.30.jar javax.ws.rs-api-2.1.1.jar slf4j-api-1.7.25.jar jackson-annotations-2.12.5.jar connect-transforms-2.1.1.jar jackson-databind-2.13.4.2.jar jackson-annotations-2.13.4.jar jackson-core-2.13.4.jar kafka-clients-3.3.0.jar zstd-jni-1.5.2-1.jar lz4-java-1.8.0.jar snappy-java-1.1.8.4.jar slf4j-api-1.7.36.jar
+

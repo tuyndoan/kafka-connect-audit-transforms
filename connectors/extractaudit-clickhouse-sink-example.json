@@ -1,0 +1,28 @@
+{
+  "name": "extractaudit-clickhouse-sink-example",
+  "config": {
+    "tasks.max": "1",
+    "connector.class": "com.clickhouse.kafka.connect.ClickHouseSinkConnector",
+    "topics.regex": "data_catalog_(.*)",
+    "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "key.converter.schemas.enable": "true",
+    "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "value.converter.schemas.enable": "true",
+    "transforms": "audit, topic_to_table",
+    "transforms.audit.type": "com.tuyndv.kafka.smt.ExtractAuditRecordState$Value",
+    "transforms.audit.exclude": "Timestamp",
+    "transforms.audit.include": "Code, AutoCode, MethodId, BranchId, BillTypeId, CenterId",
+    "transforms.topic_to_table.type": "org.apache.kafka.connect.transforms.RegexRouter",
+    "transforms.topic_to_table.regex": "data_catalog_(.*)",
+    "transforms.topic_to_table.replacement": "audit_records",
+    "hostname": "your-clickhouse-host",
+    "port": "8123",
+    "database": "your_database",
+    "username": "your_username",
+    "password": "**************************",
+    "ssl": "false",
+    "exactlyOnce": "false",
+    "ignorePartitionsWhenBatching": "true"
+  }
+}
+
