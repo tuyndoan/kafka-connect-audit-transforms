@@ -17,7 +17,7 @@
 
 This project provides **ExtractAuditRecordState**, a specialized Single Message Transformation for Kafka Connect that transforms Change Data Capture (CDC) records from Debezium connectors into standardized audit record format. Perfect for organizations requiring comprehensive audit logging, compliance tracking, and data warehouse ETL pipelines.
 
-**Primary Use Case**: Transform CDC data from any database (via Debezium) into standardized audit records stored in data warehouses like ClickHouse for compliance and analytics.
+**Primary Use Case**: Transform CDC data from any database (via Debezium) into standardized audit records for storage in any data warehouse or sink (ClickHouse, PostgreSQL, MongoDB, Elasticsearch, etc.) for compliance and analytics.
 
 **Additional Feature**: Includes `InsertField` SMT for inserting Kafka metadata and static values into records.
 
@@ -55,20 +55,22 @@ This project provides **ExtractAuditRecordState**, a specialized Single Message 
          │ Transformed Messages
          ▼
 ┌─────────────────────────────────────────┐
-│  ClickHouse Sink Connector             │
+│  Any Sink Connector                     │
+│  (ClickHouse, PostgreSQL, MongoDB,      │
+│   Elasticsearch, etc.)                  │
 │  + ExtractAuditRecordState SMT         │
 │    - Extracts audit info                │
 │    - Transforms to audit format         │
-│  + RegexRouter SMT                      │
-│    - Routes to audit_records table      │
+│  + Optional: RegexRouter SMT            │
+│    - Routes to target table/topic       │
 └────────┬────────────────────────────────┘
          │
          │ Standardized Audit Records
          ▼
 ┌─────────────────┐
-│  ClickHouse     │
-│  audit_records  │
-│  (Data Warehouse)│
+│  Data Warehouse │
+│  or Sink System │
+│  (Any supported)│
 └─────────────────┘
 ```
 
@@ -115,10 +117,10 @@ This project provides **ExtractAuditRecordState**, a specialized Single Message 
   }
   ```
 
-**Step 4: Storage in ClickHouse**
-- All audit records stored in single `audit_records` table
-- Partitioned by month and table name
-- TTL: 6 months automatic cleanup
+**Step 4: Storage in Target System**
+- Transformed audit records can be stored in any sink connector (ClickHouse, PostgreSQL, MongoDB, Elasticsearch, etc.)
+- The transformation is sink-agnostic - it only transforms the data format
+- Example: ClickHouse table partitioned by month and table name with TTL for automatic cleanup
 
 ## 🚀 Quick Start
 
@@ -140,9 +142,9 @@ cp target/kafka-connect-smt-2.0.1.jar /path/to/kafka/connect/plugins/
 
 > **Note**: Restart your Kafka Connect worker after installation.
 
-### 3️⃣ Setup ClickHouse Table
+### 3️⃣ Setup Target Table (Example: ClickHouse)
 
-Create the audit_records table in ClickHouse:
+Create the audit_records table in your target system. Example for ClickHouse:
 
 ```sql
 CREATE TABLE IF NOT EXISTS audit_records 
@@ -173,7 +175,9 @@ ORDER BY (table, sync_date)
 TTL sync_date + INTERVAL 6 MONTH;
 ```
 
-See `sql/create_table_audit_records.sql` for the complete script.
+See `sql/create_table_audit_records.sql` for the complete ClickHouse script.
+
+> **💡 Note**: This transformation works with **any sink connector**. The ClickHouse example is just one option. You can use PostgreSQL, MongoDB, Elasticsearch, or any other Kafka Connect sink connector.
 
 ### 4️⃣ Configure Debezium Source Connector
 
@@ -187,7 +191,7 @@ curl -X POST http://localhost:8083/connectors \
 
 > **📝 Note**: This example uses SQL Server, but works with any Debezium-supported database.
 
-### 5️⃣ Configure ClickHouse Sink Connector
+### 5️⃣ Configure Sink Connector (Example: ClickHouse)
 
 Use the example configuration in `connectors/extractaudit-clickhouse-sink-example.json`:
 
@@ -197,7 +201,9 @@ curl -X POST http://localhost:8083/connectors \
   -d @connectors/extractaudit-clickhouse-sink-example.json
 ```
 
-> **✅ Done**: Your CDC pipeline is now configured! Messages will be transformed and stored in ClickHouse.
+> **✅ Done**: Your CDC pipeline is now configured! Messages will be transformed into audit format and stored in your target system.
+> 
+> **💡 Note**: This example uses ClickHouse, but you can use **any Kafka Connect sink connector** (PostgreSQL, MongoDB, Elasticsearch, etc.). The `ExtractAuditRecordState` transformation is sink-agnostic and only transforms the data format.
 
 ## 📦 Components
 
@@ -390,7 +396,9 @@ See `connectors/debezium-sqlserver-source-example.json` for SQL Server example:
 - ✅ Creates Kafka topics: `example_data_catalog.EXAMPLE_DB.dbo.ExampleTable1`, etc.
 - ✅ Publishes Debezium envelope format messages (standard format across all Debezium connectors)
 
-### Step 2: ClickHouse Sink Connector Configuration
+### Step 2: Sink Connector Configuration (Example: ClickHouse)
+
+The `ExtractAuditRecordState` transformation works with **any Kafka Connect sink connector**. Here's an example using ClickHouse:
 
 See `connectors/extractaudit-clickhouse-sink-example.json`:
 
@@ -419,6 +427,13 @@ See `connectors/extractaudit-clickhouse-sink-example.json`:
 - ✅ Consumes messages from topics matching `data_catalog_*`
 - ✅ Applies `ExtractAuditRecordState` transformation to convert to audit format (automatically extracts offset and sync_date)
 - ✅ Routes all messages to `audit_records` table in ClickHouse
+
+> **💡 Important**: The `ExtractAuditRecordState` transformation is **sink-agnostic**. You can use it with any Kafka Connect sink connector:
+> - **ClickHouse**: `com.clickhouse.kafka.connect.ClickHouseSinkConnector`
+> - **PostgreSQL**: `io.confluent.connect.jdbc.JdbcSinkConnector`
+> - **MongoDB**: `com.mongodb.kafka.connect.MongoSinkConnector`
+> - **Elasticsearch**: `io.confluent.connect.elasticsearch.ElasticsearchSinkConnector`
+> - **Any other Kafka Connect sink connector**
 
 ### Step 3: Data Flow Example
 
@@ -550,7 +565,7 @@ mvn test
 1. ✅ **Field Selection**: Only include business context fields in `include` list, not audit user fields
 2. 🔒 **Exclude Sensitive Data**: Use `exclude` list to remove sensitive fields like passwords, tokens
 3. 🌍 **Timezone Configuration**: Set appropriate timezone for date/time field conversion
-4. 📊 **Partitioning Strategy**: ClickHouse table is partitioned by month and table name for optimal query performance
+4. 📊 **Partitioning Strategy**: Configure appropriate partitioning for your target system (e.g., ClickHouse table partitioned by month and table name for optimal query performance)
 5. ⏰ **TTL Configuration**: Configure appropriate TTL based on compliance requirements (default: 6 months)
 6. 📈 **Monitoring**: Monitor connector lag and error rates in Kafka Connect logs
 
