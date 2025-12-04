@@ -26,7 +26,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
-        <kafkaconnect.version>2.1.1</kafkaconnect.version>
+        <kafkaconnect.version>2.2.2-cp7</kafkaconnect.version>
         <confluent.version>5.1.1</confluent.version>
     </properties>
 
